@@ -1,5 +1,5 @@
 interface Entity {
-  _id: string;
+  id: string;
   name: string;
   type: "customer" | "business";
   email?: string;

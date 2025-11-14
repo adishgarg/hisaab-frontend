@@ -68,7 +68,7 @@ export default function CompaniesPage() {
     if (!editingCompany) return;
 
     try {
-      await companyApi.update(editingCompany._id, formData);
+      await companyApi.update(editingCompany.id, formData);
       await fetchCompanies();
       setIsEditing(false);
       setEditingCompany(null);
@@ -145,7 +145,7 @@ export default function CompaniesPage() {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {companies.map((company) => (
-                      <tr key={company._id}>
+                      <tr key={company.id}>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div>
                             <div className="text-sm font-medium text-gray-900">
@@ -171,7 +171,7 @@ export default function CompaniesPage() {
                             Edit
                           </button>
                           <button
-                            onClick={() => handleDelete(company._id)}
+                            onClick={() => handleDelete(company.id)}
                             className="text-red-600 hover:text-red-900"
                           >
                             Delete

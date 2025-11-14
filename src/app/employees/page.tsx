@@ -63,7 +63,7 @@ export default function EmployeesPage() {
       let response;
       if (userType === 'company') {
         // Company fetching their employees
-        response = await employeeApi.getByCompany(user._id);
+        response = await employeeApi.getByCompany(user.id);
       } else {
         // Employee viewing other employees in their company
         response = await employeeApi.getByCompany(user.companyId);
@@ -109,7 +109,7 @@ export default function EmployeesPage() {
       name: employee.name,
       email: employee.email,
       phone: employee.phone,
-      roleId: employee.roleId._id,
+      roleId: employee.role.id,
     });
   };
 
@@ -117,7 +117,7 @@ export default function EmployeesPage() {
     if (!editingEmployee) return;
 
     try {
-      await employeeApi.update(editingEmployee._id, editFormData);
+      await employeeApi.update(editingEmployee.id, editFormData);
       await fetchEmployees();
       setEditingEmployee(null);
       setEditFormData({});
@@ -204,13 +204,13 @@ export default function EmployeesPage() {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {employees.map((employee) => (
-                      <tr key={employee._id}>
+                      <tr key={employee.id}>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm font-medium text-gray-900">
                             {employee.name}
                           </div>
                           <div className="text-sm text-gray-500">
-                            ID: {employee._id.slice(-6)}
+                            ID: {employee.id.slice(-6)}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -218,9 +218,9 @@ export default function EmployeesPage() {
                           <div className="text-sm text-gray-500">{employee.phone || 'N/A'}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">{employee.roleId.name}</div>
+                          <div className="text-sm text-gray-900">{employee.role.name}</div>
                           <div className="text-sm text-gray-500">
-                            {employee.roleId.permissions.length} permissions
+                            {employee.role?.permissions?.length || 0} permissions
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -231,7 +231,7 @@ export default function EmployeesPage() {
                             Edit
                           </button>
                           <button
-                            onClick={() => handleDeleteEmployee(employee._id)}
+                            onClick={() => handleDeleteEmployee(employee.id)}
                             className="text-red-600 hover:text-red-900"
                           >
                             Delete
@@ -301,7 +301,7 @@ export default function EmployeesPage() {
                           >
                             <option value="">Select a role</option>
                             {roles.map((role) => (
-                              <option key={role._id} value={role._id}>
+                              <option key={role.id} value={role.id}>
                                 {role.name}
                               </option>
                             ))}
@@ -391,7 +391,7 @@ export default function EmployeesPage() {
                           >
                             <option value="">Select a role</option>
                             {roles.map((role) => (
-                              <option key={role._id} value={role._id}>
+                              <option key={role.id} value={role.id}>
                                 {role.name}
                               </option>
                             ))}

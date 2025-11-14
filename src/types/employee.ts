@@ -24,27 +24,36 @@ export interface UpdateEmployeeRequest {
 }
 
 export interface EmployeeResponse {
-  _id: string;
+  id: string;
   name: string;
   email: string;
   phone?: string;
-  companyId: {
-    _id: string;
+  companyId: string;
+  roleId: string;
+  company: {
+    id: string;
     name: string;
   };
-  roleId: Role;
+  role: Role;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface Role {
-  _id: string;
+  id: string;
   name: string;
   description: string;
-  permissions: Permission[];
+  permissions: RolePermission[];
   companyId: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface RolePermission {
+  id: string;
+  roleId: string;
+  permissionId: string;
+  permission: Permission;
 }
 
 export interface CreateRoleRequest {
@@ -60,7 +69,7 @@ export interface UpdateRoleRequest {
 }
 
 export interface Permission {
-  _id: string;
+  id: string;
   name: string;
   description: string;
   category: string;

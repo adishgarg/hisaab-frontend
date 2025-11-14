@@ -180,7 +180,7 @@ export default function EntitiesPage() {
         notes: editFormData.notes || undefined,
       };
       
-      const response = await fetch(`http://localhost:5000/entities/${editingEntity._id}`, {
+      const response = await fetch(`http://localhost:5000/entities/${editingEntity.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -355,13 +355,13 @@ export default function EntitiesPage() {
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
                       {filteredEntities.map((entity) => (
-                        <tr key={entity._id}>
+                        <tr key={entity.id}>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="text-sm font-medium text-gray-900">
                               {entity.name}
                             </div>
                             <div className="text-sm text-gray-500">
-                              ID: {entity._id.slice(-6)}
+                              ID: {entity.id.slice(-6)}
                             </div>
                             {entity.type === 'business' && entity.gstNumber && (
                               <div className="text-sm text-gray-500">
@@ -413,7 +413,7 @@ export default function EntitiesPage() {
                               Edit
                             </button>
                             <button
-                              onClick={() => handleDeleteEntity(entity._id)}
+                              onClick={() => handleDeleteEntity(entity.id)}
                               className="text-red-600 hover:text-red-900"
                             >
                               Delete

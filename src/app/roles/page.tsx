@@ -94,7 +94,7 @@ export default function RolesPage() {
     setEditFormData({
       name: role.name,
       description: role.description,
-      permissionIds: role.permissions.map(p => p._id),
+      permissionIds: role.permissions.map(p => p.permission.id),
     });
   };
 
@@ -102,7 +102,7 @@ export default function RolesPage() {
     if (!editingRole) return;
 
     try {
-      await roleApi.update(editingRole._id, editFormData);
+      await roleApi.update(editingRole.id, editFormData);
       await fetchRoles();
       setEditingRole(null);
       setEditFormData({});
@@ -192,7 +192,7 @@ export default function RolesPage() {
             ) : (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {roles.map((role) => (
-                  <div key={role._id} className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                  <div key={role.id} className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
                     <div className="flex justify-between items-start mb-4">
                       <div>
                         <h3 className="text-lg font-medium text-gray-900">{role.name}</h3>
@@ -206,7 +206,7 @@ export default function RolesPage() {
                           Edit
                         </button>
                         <button
-                          onClick={() => handleDeleteRole(role._id)}
+                          onClick={() => handleDeleteRole(role.id)}
                           className="text-red-600 hover:text-red-900 text-sm"
                         >
                           Delete
@@ -220,7 +220,7 @@ export default function RolesPage() {
                       </h4>
                       <div className="space-y-1">
                         {role.permissions.slice(0, 3).map((permission) => (
-                          <div key={permission._id} className="flex items-center">
+                          <div key={permission.permission.id} className="flex items-center">
                             <span className="text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded">
                               {permission.category}
                             </span>
@@ -288,11 +288,11 @@ export default function RolesPage() {
                                 <h4 className="font-medium text-gray-900 mb-2">{category}</h4>
                                 <div className="space-y-2">
                                   {categoryPermissions.map((permission) => (
-                                    <label key={permission._id} className="flex items-center">
+                                    <label key={permission.id} className="flex items-center">
                                       <input
                                         type="checkbox"
-                                        checked={(createFormData.permissionIds || []).includes(permission._id)}
-                                        onChange={() => handlePermissionToggle(permission._id, true)}
+                                        checked={(createFormData.permissionIds || []).includes(permission.id)}
+                                        onChange={() => handlePermissionToggle(permission.id, true)}
                                         className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                                       />
                                       <div className="ml-2">
@@ -376,11 +376,11 @@ export default function RolesPage() {
                                 <h4 className="font-medium text-gray-900 mb-2">{category}</h4>
                                 <div className="space-y-2">
                                   {categoryPermissions.map((permission) => (
-                                    <label key={permission._id} className="flex items-center">
+                                    <label key={permission.id} className="flex items-center">
                                       <input
                                         type="checkbox"
-                                        checked={(editFormData.permissionIds || []).includes(permission._id)}
-                                        onChange={() => handlePermissionToggle(permission._id, false)}
+                                        checked={(editFormData.permissionIds || []).includes(permission.id)}
+                                        onChange={() => handlePermissionToggle(permission.id, false)}
                                         className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                                       />
                                       <div className="ml-2">

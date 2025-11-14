@@ -26,7 +26,7 @@ export interface UpdateCompanyRequest {
 }
 
 export interface CompanyResponse {
-  _id: string;
+  id: string;
   name: string;
   address: string;
   phone: number;

@@ -7,7 +7,7 @@ import { ROUTES } from '@/lib/constants';
 
 interface NavbarProps {
   user: {
-    _id: string;
+    id: string;
     name: string;
     email: string;
   } | null;
