@@ -13,35 +13,61 @@ interface User {
 export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null);
   const [userType, setUserType] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const userData = localStorage.getItem("user");
-    const userTypeData = localStorage.getItem("userType");
+    try {
+      const token = localStorage.getItem("token");
+      const userData = localStorage.getItem("user");
+      const userTypeData = localStorage.getItem("userType");
 
-    if (!token) {
+      if (!token) {
+        router.push("/login");
+        return;
+      }
+
+      if (userData) {
+        try {
+          const parsedUser = JSON.parse(userData);
+          setUser(parsedUser);
+        } catch (error) {
+          console.error("Error parsing user data:", error);
+          localStorage.removeItem("user");
+          router.push("/login");
+          return;
+        }
+      }
+      
+      if (userTypeData) {
+        setUserType(userTypeData);
+      }
+    } catch (error) {
+      console.error("Error accessing localStorage:", error);
       router.push("/login");
-      return;
-    }
-
-    if (userData) {
-      setUser(JSON.parse(userData));
-    }
-    if (userTypeData) {
-      setUserType(userTypeData);
+    } finally {
+      setIsLoading(false);
     }
   }, [router]);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    localStorage.removeItem("userType");
-    router.push("/login");
+    try {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      localStorage.removeItem("userType");
+      router.push("/login");
+    } catch (error) {
+      console.error("Error during logout:", error);
+      router.push("/login");
+    }
   };
 
-  if (!user) {
+  if (isLoading) {
     return <div className="flex justify-center items-center h-screen">Loading...</div>;
+  }
+
+  if (!user) {
+    return <div className="flex justify-center items-center h-screen">Redirecting...</div>;
   }
 
   return (

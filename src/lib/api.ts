@@ -110,4 +110,36 @@ export const roleApi = {
     delete: (id: string) => apiClient.delete(`/roles/${id}`),
 };
 
+export const unitApi = {
+    getAll: () => apiClient.get('/units/all'),
+    getById: (id: string) => apiClient.get(`/units/${id}`),
+    create: (data: any) => apiClient.post('/units/create', data),
+    update: (id: string, data: any) => apiClient.put(`/units/${id}`, data),
+    delete: (id: string) => apiClient.delete(`/units/${id}`),
+};
+
+export const invoiceApi = {
+    getAll: () => apiClient.get('/invoices/all'),
+    getById: (id: string) => apiClient.get(`/invoices/${id}`),
+    create: (data: any) => apiClient.post('/invoices/create', data),
+    update: (id: string, data: any) => apiClient.put(`/invoices/${id}`, data),
+    delete: (id: string) => apiClient.delete(`/invoices/${id}`),
+};
+
+export const entityApi = {
+    getAll: () => apiClient.get('/entities/all'),
+    getById: (id: string) => apiClient.get(`/entities/${id}`),
+    create: (data: any) => apiClient.post('/entities/create', data),
+    update: (id: string, data: any) => apiClient.put(`/entities/${id}`, data),
+    delete: (id: string) => apiClient.delete(`/entities/${id}`),
+};
+    
+export const itemApi = {
+    getAll: () => apiClient.get('/items/all'),
+    getById: (id: string) => apiClient.get(`/items/${id}`),
+    create: (data: any) => apiClient.post('/items/create', data),
+    update: (id: string, data: any) => apiClient.put(`/items/${id}`, data),
+    delete: (id: string) => apiClient.delete(`/items/${id}`),
+};
+
 export { apiClient };

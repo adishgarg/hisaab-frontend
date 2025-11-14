@@ -8,6 +8,10 @@ export const ROUTES = {
   COMPANIES: '/companies',
   EMPLOYEES: '/employees',
   ROLES: '/roles',
+  UNITS: '/units',
+  INVOICES: '/invoices',
+  ENTITIES: '/entities',
+  ITEMS: '/items',
 } as const;
 
 export const STORAGE_KEYS = {
