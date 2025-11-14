@@ -222,10 +222,10 @@ export default function RolesPage() {
                         {role.permissions.slice(0, 3).map((permission) => (
                           <div key={permission.permission.id} className="flex items-center">
                             <span className="text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded">
-                              {permission.category}
+                              {permission.permission.category}
                             </span>
                             <span className="text-sm text-gray-600 ml-2">
-                              {permission.name}
+                              {permission.permission.name}
                             </span>
                           </div>
                         ))}
