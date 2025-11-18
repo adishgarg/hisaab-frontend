@@ -31,13 +31,28 @@ class ApiClient {
             });
 
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'API request failed');
+                let errorMessage = 'API request failed';
+                
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.error || errorData.message || `HTTP ${response.status}: ${response.statusText}`;
+                } catch (parseError) {
+                    // If we can't parse the error response as JSON, use status text
+                    errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+                }
+                
+                throw new Error(errorMessage);
             }
 
             return response.json();
         } catch (error) {
             console.error(`API Error [${options.method || 'GET'} ${endpoint}]:`, error);
+            
+            // Re-throw the error with additional context if it's a network error
+            if (error instanceof TypeError && error.message.includes('fetch')) {
+                throw new Error('Network error: Please check your internet connection and try again');
+            }
+            
             throw error;
         }
     }
@@ -104,7 +119,7 @@ export const employeeApi = {
 
 export const roleApi = {
     getAll: () => apiClient.get('/roles'),
-    getPermissions: () => apiClient.get('/permissions'),
+    getPermissions: () => apiClient.get('/roles/permissions'),
     create: (data: any) => apiClient.post('/roles', data),
     update: (id: string, data: any) => apiClient.put(`/roles/${id}`, data),
     delete: (id: string) => apiClient.delete(`/roles/${id}`),

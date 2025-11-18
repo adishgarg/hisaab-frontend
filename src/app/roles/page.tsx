@@ -68,9 +68,10 @@ export default function RolesPage() {
   const fetchPermissions = async () => {
     try {
       const response: PermissionsResponse = await roleApi.getPermissions();
-      setPermissions(response.permissions);
+      setPermissions(response.permissions || {});
     } catch (err) {
       console.error('Failed to fetch permissions:', err);
+      setPermissions({}); // Set empty object as fallback
     }
   };
 
@@ -283,7 +284,7 @@ export default function RolesPage() {
                             Permissions
                           </label>
                           <div className="max-h-96 overflow-y-auto border border-gray-300 rounded-md p-4">
-                            {Object.entries(permissions).map(([category, categoryPermissions]) => (
+                            {permissions && Object.entries(permissions).map(([category, categoryPermissions]) => (
                               <div key={category} className="mb-4">
                                 <h4 className="font-medium text-gray-900 mb-2">{category}</h4>
                                 <div className="space-y-2">
@@ -371,7 +372,7 @@ export default function RolesPage() {
                             Permissions
                           </label>
                           <div className="max-h-96 overflow-y-auto border border-gray-300 rounded-md p-4">
-                            {Object.entries(permissions).map(([category, categoryPermissions]) => (
+                            {permissions && Object.entries(permissions).map(([category, categoryPermissions]) => (
                               <div key={category} className="mb-4">
                                 <h4 className="font-medium text-gray-900 mb-2">{category}</h4>
                                 <div className="space-y-2">
