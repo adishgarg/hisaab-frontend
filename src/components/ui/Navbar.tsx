@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { ROUTES } from '@/lib/constants';
+import { NotificationBell } from '../NotificationBell';
 
 interface NavbarProps {
   user: {
@@ -77,6 +78,7 @@ export default function Navbar({ user, userType }: NavbarProps) {
           </div>
           
           <div className="flex items-center space-x-4">
+            <NotificationBell />
             {user && (
               <div className="text-sm text-gray-700">
                 <span className="font-medium">{user.name}</span>
